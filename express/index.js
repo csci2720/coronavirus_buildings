@@ -87,6 +87,7 @@ app.get('/login', (req, res) => {
       else {
         var cmp = bcrypt.compareSync(req.query.password, user.password);
         if (cmp) {
+          req.session.user = user;
           res.redirect('/home');
         }
         else {
@@ -95,6 +96,12 @@ app.get('/login', (req, res) => {
       }
     }
   });
+});
+
+// user logout
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
 });
 
 const port = process.env.PORT || 3000;
