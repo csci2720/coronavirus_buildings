@@ -3,10 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 // const path = require("path");
 
-const users = require("./routes/api/users");
-const admins = require("./routes/api/admins");
-const locations = require("./routes/api/locations");
-const cases = require("./routes/api/cases");
 
 const app = express();
 
@@ -34,10 +30,7 @@ mongoose
 
 
 // Routes
-app.use("/api/users", users);
-app.use("/api/admins", admins);
-app.use("/api/locations", locations);
-app.use("/api/cases", cases);
+
 
 
 const port = process.env.PORT || 5000;
