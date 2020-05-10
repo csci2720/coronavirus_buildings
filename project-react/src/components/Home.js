@@ -15,7 +15,8 @@ const Home = ({ location }) => {
 
     return (
         <div>
-            <h1> Hi {name}</h1>
+            <h1> Home page</h1>
+            <h2> Hi {name}</h2>
         </div>
     );
 }

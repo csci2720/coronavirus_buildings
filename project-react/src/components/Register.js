@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import './css/Login.css';
+import '../css/Login.css';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -16,7 +16,7 @@ const Register = () => {
                 <div>
                     <input placeholder="Password" className="loginInput mt-20" type="text" />
                 </div>
-                <Link to={`/login`}>
+                <Link to={`/`}>
                     <button className={'button mt-20'} type="submit">Sign Up</button>
                 </Link>
             </div>
