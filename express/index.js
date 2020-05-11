@@ -35,7 +35,7 @@ app.use(session({
 }));
 
 // DB Config
-const db = "mongoURI";
+const db = "mongodb+srv://Myrat:Myratjon123@cluster0-pjvpj.mongodb.net/csci2720_project";
 
 // Connect to MongoDB
 
@@ -87,7 +87,7 @@ app.get('/login', (req, res) => {
       else {
         var cmp = bcrypt.compareSync(req.query.password, user.password);
         if (cmp) {
-          req.session.user = user;
+          req.session.user = true;
           res.redirect('/home');
         }
         else {
@@ -104,6 +104,43 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+// admin login
+app.get('/admin/login/', (req, res) => {
+  Admin.findOne({username: req.query.username}, (err, admin) => {
+    if (!admin) {
+      res.send("The admin with the given username does not exist.");
+    }
+    else {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        if (req.query.password === admin.password) {
+          req.session.admin = true;
+          res.redirect('/admin');
+        }
+        else {
+          res.send("Incorrect Password. Please try again!");
+        }
+      }
+    }
+  });
+});
+
+// admin home page
+app.get('/admin', (req, res) => {
+  if (req.session.admin) {
+    res.send("Hello Admin, welcome back.");
+  }
+  else {
+    res.send("You are not authorized to access this page.");
+  }
+});
+
+// main page
+app.get('/', (req, res) => {
+  res.send("Hello World!");
+});
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
