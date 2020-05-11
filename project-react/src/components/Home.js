@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
+import TableData from "./Table";
+import Header from "./Header"
+import Map from "./Map"
+import { Container, Row, Col } from 'reactstrap';
 
 const Home = ({ location }) => {
     const [name, setName] = useState('');
@@ -15,8 +19,11 @@ const Home = ({ location }) => {
 
     return (
         <div>
-            <h1> Home page</h1>
-            <h2> Hi {name}</h2>
+            <Header />
+            <div style={{ margin: '30px', marginTop: '60px', marginRight: '500px', border: '1px solid grey' }}>
+                <TableData />
+            </div>
+            {/* <Map /> */}
         </div>
     );
 }
