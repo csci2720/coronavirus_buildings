@@ -14,7 +14,7 @@ const Case = require("../../models/Case");
 // @route 
 // @desc user register
 // @access User
-app.post('/register', (req, res) => {
+router.post('/register', (req, res) => {
     var salt = bcrypt.genSaltSync();
     var passwordHash = bcrypt.hashSync(req.body.password, salt);
   
@@ -36,7 +36,7 @@ app.post('/register', (req, res) => {
   
   
   // user login
-  app.get('/login', (req, res) => {
+  router.get('/login', (req, res) => {
   
     User.findOne({ username: req.query.username }, (err, user) => {
       if (!user) {
@@ -61,7 +61,7 @@ app.post('/register', (req, res) => {
   });
   
   // user logout
-  app.get('/logout', (req, res) => {
+  router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
   });

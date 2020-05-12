@@ -14,7 +14,7 @@ const Case = require("../../models/Case");
 // @route 
 // @desc admin login
 // @access Admin
-app.get('/login', (req, res) => {
+router.get('/login', (req, res) => {
     Admin.findOne({ username: req.query.username }, (err, admin) => {
       if (!admin) {
         res.send("The admin with the given username does not exist.");
@@ -37,7 +37,7 @@ app.get('/login', (req, res) => {
   });
   
   // admin home page
-  app.get('/', (req, res) => {
+  router.get('/', (req, res) => {
     if (req.session.admin) {
       res.send("Hello Admin, welcome back.");
     }
@@ -47,7 +47,7 @@ app.get('/login', (req, res) => {
   });
   
   // admin flush the data
-  app.post('/flush', (req, res) => {
+  router.post('/flush', (req, res) => {
     Location.deleteMany({}, (err) => {
       if (err) {
         return handleError(err);
@@ -76,13 +76,13 @@ app.get('/login', (req, res) => {
   });
   
   // admin logout
-  app.get("/logout", (req, res) => {
+  router.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/");
   });
   
   // admin create location document
-  app.post('/create/location', (req, res) => {
+  router.post('/create/location', (req, res) => {
     var newLocation = new Location({
       district: req.body.district,
       coordinates: [req.body.xcoordinate, req.body.ycoordinate],
@@ -93,7 +93,7 @@ app.get('/login', (req, res) => {
   });
   
   // admin create user document
-  app.post('/create/user', (req, res) => {
+  router.post('/create/user', (req, res) => {
     var newUser = new User({
       username: req.body.username,
       password: req.body.password
