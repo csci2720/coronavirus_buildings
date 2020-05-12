@@ -17,6 +17,11 @@ const UserSchema = new Schema({
         type: [Schema.Types.ObjectId],
         default: [],
         ref: Location
+    },
+    homeLocation: {
+        type: [Number],
+        default: [0, 0],
+        required: true
     }
 });
 

@@ -26,7 +26,7 @@ router.get('/login', (req, res) => {
         else {
           if (req.query.password === admin.password) {
             req.session.admin = true;
-            res.redirect('/admin');
+            res.redirect('/api/admin/');
           }
           else {
             res.send("Incorrect Password. Please try again!");
@@ -36,43 +36,41 @@ router.get('/login', (req, res) => {
     });
   });
   
-  // admin home page
-  router.get('/', (req, res) => {
+
+  
+  // admin flush the data
+  router.post('/flush', (req, res) => {
     if (req.session.admin) {
-      res.send("Hello Admin, welcome back.");
+      Location.deleteMany({}, (err) => {
+        if (err) {
+          return handleError(err);
+        }
+        else {
+          locations = [];
+          favourites = [];
+          flushed = true;
+        }
+      });
+      User.deleteMany({}, (err) => {
+        if (err) {
+          return handleError(err);
+        }
+      });
+      Admin.deleteMany({}, (err) => {
+        if (err) {
+          return handleError(err);
+        }
+      });
+      Case.deleteMany({}, (err) => {
+        if (err) {
+          return handleError(err);
+        }
+      });
     }
     else {
       res.send("You are not authorized to access this page.");
     }
-  });
-  
-  // admin flush the data
-  router.post('/flush', (req, res) => {
-    Location.deleteMany({}, (err) => {
-      if (err) {
-        return handleError(err);
-      }
-      else {
-        locations = [];
-        favourites = [];
-        flushed = true;
-      }
-    });
-    User.deleteMany({}, (err) => {
-      if (err) {
-        return handleError(err);
-      }
-    });
-    Admin.deleteMany({}, (err) => {
-      if (err) {
-        return handleError(err);
-      }
-    });
-    Case.deleteMany({}, (err) => {
-      if (err) {
-        return handleError(err);
-      }
-    });
+    
   });
   
   // admin logout
@@ -83,37 +81,59 @@ router.get('/login', (req, res) => {
   
   // admin create location document
   router.post('/create/location', (req, res) => {
-    var newLocation = new Location({
-      district: req.body.district,
-      coordinates: [req.body.xcoordinate, req.body.ycoordinate],
-      buildingName: req.body.buildingName,
-  
-  
-    })
+    if (req.session.admin) {
+      var newLocation = new Location({
+        district: req.body.district,
+        coordinates: [req.body.xcoordinate, req.body.ycoordinate],
+        buildingName: req.body.buildingName,
+    
+    
+      });
+    }
+    else {
+      res.send("You are not authorized to access this page.");
+    }
   });
   
   // admin create user document
   router.post('/create/user', (req, res) => {
-    var newUser = new User({
-      username: req.body.username,
-      password: req.body.password
-    });
+    if (req.session.admin) {
+      var salt = bcrypt.genSaltSync();
+      var passwordHash = bcrypt.hashSync(req.body.password, salt);
   
-    newUser.save((err) => {
-      if (err) {
-        if (err.username === 'MongoError' && err.code === 11000) {
-          return res.status(500).send("The user with the given username already exist. Please change the username.");
+      var newUser = new User({
+        username: req.body.username,
+        password: passwordHash
+      });
+    
+      newUser.save((err) => {
+        if (err) {
+          if (err.username === 'MongoError' && err.code === 11000) {
+            return res.status(500).send("The user with the given username already exist. Please change the username.");
+          }
+          else {
+            return res.status(500).send(err);
+          }
         }
         else {
-          return res.status(500).send(err);
+          res.send("You have successfully created a new user" + "<br>\n" + 
+            "Username: " + newUser.username + "<br>\n"+ "Password: " + req.body.password);
         }
-      }
-      else {
-        res.send("You have successfully created a new user with username: " + newUser.username);
-      }
-    });
+      });
+    }
+    else {
+      res.send("You are not authorized to access this page.");
+    }
   });
 
-
+// admin home page
+router.get('/', (req, res) => {
+  if (req.session.admin) {
+    res.send("Hello Admin, welcome back.");
+  }
+  else {
+    res.send("You are not authorized to access this page.");
+  }
+});
 
 module.exports = router;
