@@ -39,6 +39,7 @@ router.get('/login', (req, res) => {
 
   
   // admin flush the data
+  // wrong need to change
   router.post('/flush', (req, res) => {
     if (req.session.admin) {
       Location.deleteMany({}, (err) => {
@@ -66,6 +67,7 @@ router.get('/login', (req, res) => {
           return handleError(err);
         }
       });
+      res.send("Success");
     }
     else {
       res.send("You are not authorized to access this page.");
@@ -85,9 +87,19 @@ router.get('/login', (req, res) => {
       var newLocation = new Location({
         district: req.body.district,
         coordinates: [req.body.xcoordinate, req.body.ycoordinate],
-        buildingName: req.body.buildingName,
+        building: req.body.building,
+        relatedCases: req.body.relatedCases,
+        lastVisitDate: req.body.lastVisitDate
     
-    
+      });
+      newLocation.save((err) => {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        else {
+          res.send("You have successfully created a new location" + "<br>\n" + 
+            "District: " + newLocation.district + "<br>\n" + "Building: " + newLocation.building);
+        }
       });
     }
     else {
@@ -95,6 +107,33 @@ router.get('/login', (req, res) => {
     }
   });
   
+  // admin update location document
+  router.post('/update/location', (req, res) => {
+    var myquery = { district: req.body.district, building: req.body.building};
+  
+    var newvalues = { $set: {district: req.body.newDistrict, building: req.body['changeSchedule'],
+    organizationName: req.body['changeOName'], locationName: req.body['changeLName'], charitable: req.body['changeCharity']} };
+  
+    Activity.findOne(
+      {name: req.body['upEvent'],
+      schedule: req.body['upSchedule'], organizationName: req.body['upOName'], locationName: req.body['upLName']},
+      function(err, e) {
+        if(!e){
+          res.send("The event ID was not found. Run the Code again to retry.");
+        }
+        else if (err) res.send(err);
+  
+        else{
+          Activity.updateOne(myquery, newvalues, function(err, obj){
+  
+            if (err) throw err;
+  
+          });
+          res.send('Success');
+  
+        }
+      });
+  })
   // admin create user document
   router.post('/create/user', (req, res) => {
     if (req.session.admin) {
