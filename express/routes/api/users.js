@@ -76,5 +76,15 @@ router.get('/', (req, res) => {
   }
 });
 
+// user get list of locations
+router.get('/locations', async (req, res) => {
+  var allLocations = await Location.find({}, (err) => {if(err) return res.send('Sorry, there are no locations found.')});
+  res.status(200).send(allLocations);
+});
+
+// user get list of locations sorted according to buildingName
+router.get('/sortedLocations/:sort', (req, res) => {
+  
+})
 
 module.exports = router;

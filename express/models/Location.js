@@ -12,16 +12,20 @@ const LocationSchema = new Schema({
     coordinates: {
         type: [Number],
         required: true,
-        default: [0, 0]
+        default: undefined
     },
-    buildingName: {
+    building: {
         type: String,
         required: true
     },
     relatedCases: {
-        type: [Schema.Types.ObjectId],
-        ref: Case,
-        required: true
+        type: [Number],
+        required: true,
+        default: undefined
+    },
+    lastVisitDate: {
+        type: Date,
+        default: undefined
     }
 
 });
