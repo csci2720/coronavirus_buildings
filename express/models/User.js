@@ -13,11 +13,12 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    favourites: {
+    /*favourites: {
         type: [Schema.Types.ObjectId],
-        default: undefined,
-        ref: Location
+        ref: Location,
+        default: undefined
     },
+    */
     homeLocation: {
         type: [Number],
         default: [0, 0],

@@ -15,12 +15,13 @@ const CommentSchema = new Schema({
         default: "",
         required: true
     },
+    /*
     location: {
         type: Schema.Types.ObjectId,
         ref: Location,
         required: true
     }
-
+*/
 });
 
 module.exports = Comment = mongoose.model("comments", CommentSchema);
