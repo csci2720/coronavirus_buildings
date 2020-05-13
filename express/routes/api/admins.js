@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-
-
+const csv = require("fast-csv");
+const fs = require("fs");
 
 // Load  model
 const Admin = require("../../models/Admin");
@@ -10,6 +10,8 @@ const Location = require("../../models/Location");
 const User = require("../../models/User");
 const Case = require("../../models/Case");
 
+var csvfile = __dirname + "/../../public/files/locations.csv";
+var stream = fs.createReadStream(csvfile);
 
 // @route 
 // @desc admin login
@@ -85,11 +87,11 @@ router.get('/login', (req, res) => {
   router.post('/create/location', (req, res) => {
     if (req.session.admin) {
       var newLocation = new Location({
-        district: req.body.district,
-        coordinates: [req.body.xcoordinate, req.body.ycoordinate],
-        building: req.body.building,
-        relatedCases: req.body.relatedCases,
-        lastVisitDate: req.body.lastVisitDate
+        district: req.body['district'],
+        coordinates: [req.body['xcoordinate'], req.body['ycoordinate']],
+        building: req.body['building'],
+        relatedCases: req.body['relatedCases'],
+        lastVisitDate: req.body['lastVisitDate']
     
       });
       newLocation.save((err) => {
@@ -109,22 +111,19 @@ router.get('/login', (req, res) => {
   
   // admin update location document
   router.post('/update/location', (req, res) => {
-    var myquery = { district: req.body.district, building: req.body.building};
+    var myquery = { district: req.body['district'], building: req.body['building']};
   
-    var newvalues = { $set: {district: req.body.newDistrict, building: req.body['changeSchedule'],
-    organizationName: req.body['changeOName'], locationName: req.body['changeLName'], charitable: req.body['changeCharity']} };
+    var newvalues = { $set: {district: req.body['newDistrict'], building: req.body['newBuilding']} };
   
-    Activity.findOne(
-      {name: req.body['upEvent'],
-      schedule: req.body['upSchedule'], organizationName: req.body['upOName'], locationName: req.body['upLName']},
-      function(err, e) {
+    Location.findOne(
+      myquery, (err, e) => {
         if(!e){
-          res.send("The event ID was not found. Run the Code again to retry.");
+          res.send("The location was not found.");
         }
         else if (err) res.send(err);
   
         else{
-          Activity.updateOne(myquery, newvalues, function(err, obj){
+          Location.updateOne(myquery, newvalues, (err, obj) => {
   
             if (err) throw err;
   
@@ -133,15 +132,36 @@ router.get('/login', (req, res) => {
   
         }
       });
-  })
+  });
+
+  // admin delete location document
+  router.post('/delete/location', (req, res) => {
+    var myquery = { district: req.body['district'], building: req.body['building']};
+    Location.findOne(myquery, (err, e) => {
+        if(!e){
+          res.send("The location was not found.");
+        }
+        else	if (err) res.send(err);
+  
+        else{
+          Location.deleteOne(myquery, function(err, obj){
+            if (err) throw err;
+  
+            res.redirect("/api/admin");
+  
+          });
+        }
+      });
+  });
+
   // admin create user document
   router.post('/create/user', (req, res) => {
     if (req.session.admin) {
       var salt = bcrypt.genSaltSync();
-      var passwordHash = bcrypt.hashSync(req.body.password, salt);
+      var passwordHash = bcrypt.hashSync(req.body['password'], salt);
   
       var newUser = new User({
-        username: req.body.username,
+        username: req.body['username'],
         password: passwordHash
       });
     
@@ -156,7 +176,7 @@ router.get('/login', (req, res) => {
         }
         else {
           res.send("You have successfully created a new user" + "<br>\n" + 
-            "Username: " + newUser.username + "<br>\n"+ "Password: " + req.body.password);
+            "Username: " + newUser.username + "<br>\n"+ "Password: " + req.body['password']);
         }
       });
     }
@@ -165,6 +185,79 @@ router.get('/login', (req, res) => {
     }
   });
 
+  // admin update user document
+  router.post('/update/user', (req, res) => {
+    var myquery = { username: req.body['username'], password: req.body['password']};
+  
+    var newvalues = { $set: {username: req.body['newUsername'], password: req.body['newPassword']} };
+  
+    User.findOne(
+      myquery, (err, e) => {
+        if(!e){
+          res.send("The user was not found.");
+        }
+        else if (err) res.send(err);
+  
+        else{
+          User.updateOne(myquery, newvalues, (err, obj) => {
+  
+            if (err) throw err;
+  
+          });
+          res.send('Success');
+  
+        }
+      });
+  });
+
+  // admin delete user document
+  router.post('/delete/user', (req, res) => {
+    var myquery = { username: req.body['username'], password: req.body['password']};
+    User.findOne(myquery, (err, e) => {
+        if(!e){
+          res.send("The user was not found.");
+        }
+        else	if (err) res.send(err);
+  
+        else{
+          User.deleteOne(myquery, function(err, obj){
+            if (err) throw err;
+  
+            res.redirect("/api/admin");
+  
+          });
+        }
+      });
+  });
+
+// admin upload location data
+router.post('upload/location', (req, res) => {
+  //TO DO
+}).get('/import', (req, res, next) => {
+    
+    var csvStream = csv()
+        .on("data", (data) => {
+         
+         var newLocation = new Product({
+              district: data[0],
+              building: data[1],
+              relatedCases: data[2],
+              lastVisitDate: data[3]
+         });
+         
+          newLocation.save((error) => {
+              if(error){
+                   throw error;
+              }
+          }); 
+        }).on("end", function(){
+          console.log(" End of file import");
+    });
+  
+    stream.pipe(csvStream);
+    res.json({success : "Data imported successfully.", status : 200});
+     
+  });
 // admin home page
 router.get('/', (req, res) => {
   if (req.session.admin) {
