@@ -125,6 +125,7 @@ router.get('/location/:locId',(req,res)=>
   //b
   res.send(Location);
 });
+
 //Add location into a list of favourite locations, and see the list in another view
 router.post('/newlocation/:locId',(req,res)=>
 {
