@@ -81,10 +81,56 @@ router.get('/locations', async (req, res) => {
   var allLocations = await Location.find({}, (err) => {if(err) return res.send('Sorry, there are no locations found.')});
   res.status(200).send(allLocations);
 });
-
 // user get list of locations sorted according to buildingName
 router.get('/sortedLocations/:sort', (req, res) => {
-  
-})
+  var type = req['sort'];
+  var sorted;
+  if (type == 'district')
+  {
+      sorted = Location.find().sort({district:1});
+  }
+  else if (type == 'building')
+  {
+    sorted =  Location.find().sort({building:1});
+  }
+  else if (type == 'coordinates')
+  {
+    sorted =  Location.find().sort({coordinates:1});
+  } 
+  else if (type == 'lastVisitDate')
+  {
+    sorted =  Location.find().sort({lastVisitDate:1});
+  }
+  else
+  {
+    sorted =  Location.find().sort({relatedCases:1});
+  }
+  res.send(sorted);
+});
+//Show all locations on map
+router.get('/maplocation', (req, res) => {
+});
+//locations which contain keywords in one field chosen by the user which will result in a table of location results
+router.get('/smth/:keyword',(req,res)=>
+{
 
+});
+//A separate view for one single location
+router.get('/location/:locId',(req,res)=>
+{
+  //a
+
+  //c
+
+  //b
+  res.send(Location);
+});
+//Add location into a list of favourite locations, and see the list in another view
+router.post('/newlocation/:locId',(req,res)=>
+{
+    User.findOne({username: req.body.username}).exec( (e)=>
+    {
+      e.favourites.push(req['locId']);
+    });
+});
 module.exports = router;
