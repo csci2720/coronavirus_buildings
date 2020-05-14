@@ -87,23 +87,23 @@ router.get('/sortedLocations/:sort', (req, res) => {
   var sorted;
   if (type == 'district')
   {
-      sorted = Location.find().sort({district:1});
+      sorted = Location.find({}).sort({district: 1});
   }
   else if (type == 'building')
   {
-    sorted =  Location.find().sort({building:1});
+    sorted =  Location.find({}).sort({building: 1});
   }
   else if (type == 'coordinates')
   {
-    sorted =  Location.find().sort({coordinates:1});
+    sorted =  Location.find({}).sort({coordinates: 1});
   } 
   else if (type == 'lastVisitDate')
   {
-    sorted =  Location.find().sort({lastVisitDate:1});
+    sorted =  Location.find({}).sort({lastVisitDate: 1});
   }
   else
   {
-    sorted =  Location.find().sort({relatedCases:1});
+    sorted =  Location.find({}).sort({relatedCases: 1});
   }
   res.send(sorted);
 });
@@ -125,7 +125,6 @@ router.get('/location/:locId',(req,res)=>
   //b
   res.send(Location);
 });
-
 //Add location into a list of favourite locations, and see the list in another view
 router.post('/newlocation/:locId',(req,res)=>
 {
