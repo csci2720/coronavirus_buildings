@@ -246,35 +246,35 @@ router.post('/delete/user', (req, res) => {
   
 });
 
-// admin upload location data
-router.post('/upload/location', (req, res) => {
-  
-  var csvStream = csv()
-    .on("data", (data) => {
-
-      var newLocation = new Location({
-        district: data[0],
-        building: data[1],
-        lastVisitDate: data[2],
-        relatedCases: data[3]
-      });
-
-      newLocation.save((error) => {
-        if (error) {
-          res.send(err);
-        }
-      });
-    }).on("end", function () {
-      console.log(" End of file import");
-    });
-
-  stream.pipe(csvStream);
-  res.json({ success: "Data imported successfully.", status: 200 });
-
-});
+// // admin upload location data
+// router.post('/upload/location', (req, res) => {
+//
+//   var csvStream = csv()
+//     .on("data", (data) => {
+//
+//       var newLocation = new Location({
+//         district: data[0],
+//         building: data[1],
+//         lastVisitDate: data[2],
+//         relatedCases: data[3]
+//       });
+//
+//       newLocation.save((error) => {
+//         if (error) {
+//           res.send(err);
+//         }
+//       });
+//     }).on("end", function () {
+//       console.log(" End of file import");
+//     });
+//
+//   stream.pipe(csvStream);
+//   res.json({ success: "Data imported successfully.", status: 200 });
+//
+// });
 
 //File upload 2.0
-
+/** NOTE: "csvfile" is the name of my file given at name attribute in input tag */
 router.post("/file",async (req, res) => {
   /** convert req buffer into csv string ,
    *   "csvfile" is the name of my file given at name attribute in input tag */
