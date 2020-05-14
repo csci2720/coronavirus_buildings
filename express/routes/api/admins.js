@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const csv = require("fast-csv");
 const fs = require("fs");
+const upload = require("express-fileupload");
+const csvtojson = require("csvtojson");
 
 // Load  model
 const Admin = require("../../models/Admin");
@@ -12,6 +14,9 @@ const Case = require("../../models/Case");
 
 var csvfile = __dirname + "/public/files/locations.csv";
 var stream = fs.createReadStream(csvfile);
+
+router.use(upload());
+
 
 // @route 
 // @desc admin login
@@ -265,6 +270,37 @@ router.post('/upload/location', (req, res) => {
   res.json({ success: "Data imported successfully.", status: 200 });
 
 });
+
+//File upload 2.0
+
+router.post("/file",async (req, res) => {
+  /** convert req buffer into csv string ,
+   *   "csvfile" is the name of my file given at name attribute in input tag */
+  let csvData = req.files.csvfile.data.toString('utf8');
+  let jsonData = await csvtojson().fromString(csvData);
+  await jsonData.forEach((item) =>{
+    let relatedCases = item['Related probable/confirmed cases'].split(', ');
+    relatedCases[0] = relatedCases[0].split(' ')[1];
+    relatedCases = relatedCases.filter(item => {if(!isNaN(item)){return item}});
+    console.log(relatedCases);
+    let newLocation = new Location({
+      district: item.District,
+      building: item['Building name'],
+      lastVisitData: item['Last date of residence of the case(s)'],
+      relatedCases: relatedCases
+    })
+    newLocation.save((err) => {
+      if (err) {
+        if (err.username === "MongoError" && err.code === 11000) {
+          return "Error occurred"
+        }
+        console.log(err);
+      }
+    })
+  });
+  res.send(jsonData);
+});
+
 // admin home page
 router.get('/', (req, res) => {
   if (req.session.admin) {

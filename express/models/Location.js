@@ -17,7 +17,7 @@ const LocationSchema = new Schema({
         required: true
     },
     relatedCases: {
-        type: [Schema.Types.ObjectId],
+        type: [Number],
         ref: 'cases',
         default: undefined
     },
