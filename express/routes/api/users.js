@@ -126,11 +126,11 @@ router.get('/location/:locId',(req,res)=>
   res.send(Location);
 });
 //Add location into a list of favourite locations, and see the list in another view
-router.post('/newlocation/:locId',(req,res)=>
+router.post('/newlocation/:username',(req,res)=>
 {
     User.findOne({username: req.body.username}).exec( (e)=>
     {
-      e.favourites.push(req['locId']);
+      e.favourites.push(req.params['locId']);
     });
 });
 module.exports = router;
