@@ -20,7 +20,8 @@ router.post('/register', (req, res) => {
 
   var newUser = new User({
     username: req.body.username,
-    password: passwordHash
+    password: passwordHash,
+    favourites: []
   });
 
   newUser.save((err) => {
@@ -107,30 +108,44 @@ router.get('/sortedLocations/:sort', async (req, res) => {
   }
   res.send(sorted);
 });
-//Show all locations on map
-router.get('/maplocation', (req, res) => {
-});
-//locations which contain keywords in one field chosen by the user which will result in a table of location results
-router.get('/smth/:keyword',(req,res)=>
-{
+router.post('/favourites/:favouriteId', async (req, res) => {
+  var favId = req.params["favouriteId"];
+  console.log(favId)
+  var users = await User.find({username: req.body.username})
+  if (users.length != 0) {
+    var user = users[0];
+    if(user.favourites != undefined) {
+    if(user.favourites.filter(x => x == favId).length == 0) {
+      var new_fav = user.favourites.concat([favId])
+      var upsertData = user.toObject()
+      delete upsertData._id
+      upsertData.favourites = new_fav
+      User.update(
+        {_id: user._id},
+        upsertData, 
+        {multi: false},
+        function(err) {
+          if(err) { throw err; }
+        }
+      );
+      var new_user = await User.find({username: req.body.username})
+      console.log(new_user)
+      res.status(200).send(new_user[0]);
+    }
+  } else {
+    var user = users[0];
+    console.log(user);
+    User.update(
+      {_id: user._id},
+      {$set: {
+        favourites: [favId]
+      }})
+      var new_user = await User.find({username: req.body.username})
+      console.log(new_user)
+      res.status(200).send(new_user[0]);
+  }
+  }
+})
+// Add to favourites
 
-});
-//A separate view for one single location
-router.get('/location/:locId',(req,res)=>
-{
-  //a
-
-  //c
-
-  //b
-  res.send(Location);
-});
-//Add location into a list of favourite locations, and see the list in another view
-router.post('/newlocation/:username',(req,res)=>
-{
-    User.findOne({username: req.body.username}).exec( (e)=>
-    {
-      e.favourites.push(req.params['locId']);
-    });
-});
 module.exports = router;

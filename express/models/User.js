@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     favourites: {
         type: [Schema.Types.ObjectId],
         ref: 'locations',
-        default: undefined
+        default: []
     },
     
     homeLocation: {
