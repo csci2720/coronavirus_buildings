@@ -5,6 +5,8 @@ const csv = require("fast-csv");
 const fs = require("fs");
 const upload = require("express-fileupload");
 const csvtojson = require("csvtojson");
+const https = require('https');
+const fetch = require('node-fetch');
 
 // Load  model
 const Admin = require("../../models/Admin");
@@ -301,6 +303,29 @@ router.post("/file",async (req, res) => {
   res.send(jsonData);
 });
 
+//admin download the file and load data to DB
+
+router.get('/loadData', async (req, res) => {
+  const request = await fetch("https://api.data.gov.hk/v2/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fenhanced_sur_covid_19_eng.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%7D").then(
+      res => res.json()).then(json => {return json});
+  console.log(request);
+  await request.forEach((item) =>{
+    let newCase = new Case({
+      caseNum: item['Case no.'],
+      gender: item['Gender'],
+      age: item['Age']
+    })
+    newCase.save((err) => {
+      if (err) {
+        if (err.username === "MongoError" && err.code === 11000) {
+          return "Error occurred"
+        }
+        console.log(err);
+      }
+    })
+  });
+  res.send(request);
+});
 // admin home page
 router.get('/', (req, res) => {
   if (req.session.admin) {
