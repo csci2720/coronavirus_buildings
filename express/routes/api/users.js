@@ -83,21 +83,21 @@ router.get('/locations', async (req, res) => {
 });
 // user get list of locations sorted according to buildingName
 router.get('/sortedLocations/:sort', (req, res) => {
-  var type = req['sort'];
+  var type = req.params['sort'];
   var sorted;
-  if (type == 'district')
+  if (type === 'district')
   {
       sorted = Location.find().sort({district:1});
   }
-  else if (type == 'building')
+  else if (type === 'building')
   {
     sorted =  Location.find().sort({building:1});
   }
-  else if (type == 'coordinates')
+  else if (type === 'coordinates')
   {
     sorted =  Location.find().sort({coordinates:1});
   } 
-  else if (type == 'lastVisitDate')
+  else if (type === 'lastVisitDate')
   {
     sorted =  Location.find().sort({lastVisitDate:1});
   }
@@ -130,7 +130,7 @@ router.post('/newlocation/:locId',(req,res)=>
 {
     User.findOne({username: req.body.username}).exec( (e)=>
     {
-      e.favourites.push(req['locId']);
+      e.favourites.push(req.params['locId']);
     });
 });
 module.exports = router;

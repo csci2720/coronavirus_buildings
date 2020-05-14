@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Case = require("./Case");
-const Comment = require("./Comment");
+
 // Create Schema
 const LocationSchema = new Schema({
     district: {
@@ -11,7 +10,6 @@ const LocationSchema = new Schema({
     },
     coordinates: {
         type: [Number],
-        required: true,
         default: undefined
     },
     building: {
@@ -19,8 +17,8 @@ const LocationSchema = new Schema({
         required: true
     },
     relatedCases: {
-        type: [Number],
-        required: true,
+        type: [Schema.Types.ObjectId],
+        ref: 'cases',
         default: undefined
     },
     lastVisitDate: {
@@ -29,8 +27,8 @@ const LocationSchema = new Schema({
     },
     comments: {
         type: [Schema.Types.ObjectId],
-        ref: Comment,
-        default: []
+        ref: 'comments',
+        default: undefined
     }
 
 });

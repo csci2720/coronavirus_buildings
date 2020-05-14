@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Location = require("./Location");
 // Create Schema
 const UserSchema = new Schema({
     username: {
@@ -13,16 +12,15 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    /*favourites: {
+    favourites: {
         type: [Schema.Types.ObjectId],
-        ref: Location,
+        ref: 'locations',
         default: undefined
     },
-    */
+    
     homeLocation: {
         type: [Number],
-        default: [0, 0],
-        required: true
+        default: undefined
     }
 });
 
