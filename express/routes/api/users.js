@@ -82,28 +82,28 @@ router.get('/locations', async (req, res) => {
   res.status(200).send(allLocations);
 });
 // user get list of locations sorted according to buildingName
-router.get('/sortedLocations/:sort', (req, res) => {
-  var type = req['sort'];
+router.get('/sortedLocations/:sort', async (req, res) => {
+  var type = req.params['sort'];
   var sorted;
   if (type == 'district')
   {
-      sorted = Location.find({}).sort({district: 1});
+    sorted = await Location.find({}).sort({district: 1});
   }
   else if (type == 'building')
   {
-    sorted =  Location.find({}).sort({building: 1});
+    sorted = await Location.find({}).sort({building: 1});
   }
   else if (type == 'coordinates')
   {
-    sorted =  Location.find({}).sort({coordinates: 1});
+    sorted = await Location.find({}).sort({coordinates: 1});
   } 
   else if (type == 'lastVisitDate')
   {
-    sorted =  Location.find({}).sort({lastVisitDate: 1});
+    sorted = await Location.find({}).sort({lastVisitDate: 1});
   }
   else
   {
-    sorted =  Location.find({}).sort({relatedCases: 1});
+    sorted = await Location.find({}).sort({relatedCases: 1});
   }
   res.send(sorted);
 });
