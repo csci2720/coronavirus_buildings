@@ -33,7 +33,7 @@ export default function Header(location) {
                 <Toolbar>
 
                     <Typography variant="h6" className={classes.title}>
-                        Coronavirus Buildings
+                        Residential Buildings of Conoravirus cases
                     </Typography>
                     <Typography variant="h6" style={{ marginRight: '15px' }}>Your name</Typography>
                     <Link to={`/`} style={{ color: 'white', textDecoration: 'none' }}>

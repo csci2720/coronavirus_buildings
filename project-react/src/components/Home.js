@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
 import TableData from "./Table";
 import Header from "./Header"
-import Map from "./Map"
+import MapComponent from "./Map"
 import { Container, Row, Col } from 'reactstrap';
 
 const Home = ({ location }) => {
@@ -20,10 +20,16 @@ const Home = ({ location }) => {
     return (
         <div>
             <Header />
-            <div style={{ margin: '30px', marginTop: '60px', marginRight: '500px', border: '1px solid grey' }}>
-                <TableData />
+            <div style={{ display: 'flex', flexDirection: 'row', margin: '30px', marginTop: '0px' }} >
+
+
+                <div>
+                    <TableData />
+                </div>
+                <div style={{ marginTop: '82px', width: '300px', height: '500px' }}>
+                    <MapComponent />
+                </div>
             </div>
-            {/* <Map /> */}
         </div>
     );
 }

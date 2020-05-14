@@ -6,8 +6,10 @@ import '../css/Login.css';
 const Register = () => {
     const [name, setName] = useState('');
 
+
     return (
         <div className="loginOuterContainer">
+
             <div className="loginInnerContainer">
                 <h1 className="heading">Register</h1>
                 <div>
@@ -16,11 +18,13 @@ const Register = () => {
                 <div>
                     <input placeholder="Password" className="loginInput mt-20" type="text" />
                 </div>
+
+
                 <Link to={`/`}>
                     <button className={'button mt-20'} type="submit">Sign Up</button>
                 </Link>
             </div>
-        </div>
+        </div >
     );
 
 }
