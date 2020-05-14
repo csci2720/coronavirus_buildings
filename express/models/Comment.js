@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const User = require("./User");
-const Location = require("./Location");
+
 // Create Schema
 const CommentSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        ref: User,
+        ref: 'users',
         required: true
     },
     text: {
@@ -15,13 +14,13 @@ const CommentSchema = new Schema({
         default: "",
         required: true
     },
-    /*
+    
     location: {
         type: Schema.Types.ObjectId,
-        ref: Location,
+        ref: 'locations',
         required: true
     }
-*/
+
 });
 
 module.exports = Comment = mongoose.model("comments", CommentSchema);
