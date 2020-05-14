@@ -108,6 +108,7 @@ router.get('/sortedLocations/:sort', async (req, res) => {
   }
   res.send(sorted);
 });
+// Add to favourites
 router.post('/favourites/:favouriteId', async (req, res) => {
   var favId = req.params["favouriteId"];
   console.log(favId)
@@ -145,7 +146,20 @@ router.post('/favourites/:favouriteId', async (req, res) => {
       res.status(200).send(new_user[0]);
   }
   }
-})
-// Add to favourites
+});
+// add comment
+router.post('/comment/', (req, res) => {
+  var comment = req.body.password;
+  var x = User.findOne({username: req.body.username});
+  var y = Location.findOne(req.body.location);
+  var z = req.body.comment;
+  var newComment = new Comment({
+    user: x,
+    text: z,
+    location: y
+  });
+  newComment.save()
+  res.send("Congratulations, you have successfully created an account.");
+});
 
 module.exports = router;
