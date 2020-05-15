@@ -1,3 +1,6 @@
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { useState, useEffect } from 'react';
 import { useTable, useFilters, useGlobalFilter, usePagination, useSortBy } from "react-table";
 import MaUTable from "@material-ui/core/Table";
@@ -104,7 +107,7 @@ const useStyles = makeStyles({
     }
 });
 
-const data1 = []
+// const data1 = []
 
 const TableData = (props) => {
 
@@ -113,12 +116,12 @@ const TableData = (props) => {
 
     //data1 = props.data
 
-    useEffect(async () => {
-        // Update the document title using the browser API
-        // setAllData(props.data)
-        data1 = await props.data
-        console.log(data1)
-    }, []);
+    // useEffect(async () => {
+    //     // Update the document title using the browser API
+    //     // setAllData(props.data)
+    //     data1 = await props.data
+    //     console.log(data1)
+    // }, []);
 
     const addFavourite = async (info) => {
 
@@ -189,7 +192,7 @@ const TableData = (props) => {
     } = useTable(
         {
             columns,
-            data1,
+            data,
             defaultColumn,
             filterTypes,
             initialState: { pageIndex: 0 }
@@ -214,7 +217,7 @@ const TableData = (props) => {
                 </div>
                 <div style={{ margin: '20px', display: 'flex', flexDirection: 'column' }}  >
 
-                    <Paper className={classes.root} style={{ width: '800px' }}>
+                    <Paper className={classes.root} style={{ width: '1300px' }}>
                         <MaUTable {...getTableProps()} >
                             <TableHead >
                                 {headerGroups.map(headerGroup => (

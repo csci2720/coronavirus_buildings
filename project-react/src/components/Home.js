@@ -1,21 +1,25 @@
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
 import TableData from "./Table";
 import Header from "./Header"
 import MapComponent from "./Map"
-
 import Test from "./Test"
-import { Container, Row, Col } from 'reactstrap';
 
+
+//not used currently
 const Home = ({ location }) => {
-    // const [name, setName] = useState('');
+    const [name, setName] = useState('');
 
-    // useEffect(() => {
-    //     const { name } = queryString.parse(location.search);
+    useEffect(() => {
+        const user = location.data;
+        const { name } = queryString.parse(location.search);
 
-    //     setName(name)
+        setName(user)
 
-    // }, [location.search]);
+    }, [location.search]);
 
 
 
@@ -23,7 +27,7 @@ const Home = ({ location }) => {
         <div>
             <Test />
             <Header />
-            <div style={{ display: 'flex', flexDirection: 'row', margin: '30px', marginTop: '0px' }} >
+            <div style={{ display: 'flex', flexDirection: 'column', margin: '30px', marginTop: '0px' }} >
 
 
                 <div>

@@ -1,15 +1,21 @@
-
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { Component } from 'react';
 import axios from 'axios'
-import queryString from 'query-string';
+// import queryString from 'query-string';
 import Table2 from "./Table2";
+import TableData from "./Table";
 import Header from "./Header"
 import MapComponent from "./Map"
-import About from "./About"
+// import About from "./About"
 
 const final = []
+
+
+//Load data from database and render accordingly
 export default class Test extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             data: [],
@@ -79,13 +85,13 @@ export default class Test extends Component {
 
 
                     <Header />
-                    <div style={{ display: 'flex', flexDirection: 'row', margin: '30px', marginTop: '0px' }} >
+                    <div style={{ display: 'flex', flexDirection: 'column', margin: '30px', marginTop: '0px' }} >
 
 
                         <div>
                             <Table2 data={final} />
                         </div>
-                        <div style={{ marginTop: '82px', width: '300px', height: '500px' }}>
+                        <div style={{ marginTop: '82px', width: '700px', height: '500px' }}>
                             <MapComponent data={final} />
                         </div>
                     </div>
@@ -101,14 +107,14 @@ export default class Test extends Component {
 
 
                     <Header />
-                    <div style={{ display: 'flex', flexDirection: 'row', margin: '30px', marginTop: '0px' }} >
+                    <div style={{ display: 'flex', flexDirection: 'column', margin: '30px', marginTop: '0px' }} >
 
 
                         <div style={{ margin: '70px', marginTop: '50px' }}>
                             <h2>Please wait... The data is being loaded from the database.</h2>
                             <h2> We are dealing with historical data, and since there are more <br></br> than thousand cases, it may take a bit longer...</h2>
                         </div>
-                        <div style={{ marginTop: '82px', width: '300px', height: '500px' }}>
+                        <div style={{ marginTop: '82px', width: '1000px', height: '600px' }}>
                             <MapComponent data={final} />
                         </div>
                     </div>
@@ -135,68 +141,3 @@ export default class Test extends Component {
 
 
 
-
-
-
-
-
-// import Geocode from "react-geocode";
-
-// // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-// Geocode.setApiKey("AIzaSyD_GjCMxH3KxxCGbpTCSecUKAu16gv7p7Q");
-
-// // set response language. Defaults to english.
-// Geocode.setLanguage("en");
-
-// // set response region. Its optional.
-// // A Geocoding request with region=es (Spain) will return the Spanish city.
-// Geocode.setRegion("es");
-
-// // Enable or disable logs. Its optional.
-// Geocode.enableDebug();
-
-// // Get address from latitude & longitude.
-// Geocode.fromLatLng("48.8583701", "2.2922926").then(
-//     response => {
-//         const address = response.results[0].formatted_address;
-//         console.log(address);
-//     },
-//     error => {
-//         console.error(error);
-//     }
-// );
-
-// // Get latitude & longitude from address.
-// Geocode.fromAddress("Eiffel Tower").then(
-//     response => {
-//         const { lat, lng } = response.results[0].geometry.location;
-//         console.log(lat, lng);
-//     },
-//     error => {
-//         console.error(error);
-//     }
-// );
-// const Test = () => {
-
-//     console.log("yyy");
-
-//     Geocode.fromAddress("Eiffel Tower").then(
-//         response => {
-//             const { lat, lng } = response.results[0].geometry.location;
-//             console.log(lat, lng);
-//         },
-//         error => {
-//             console.error(error);
-//         }
-//     )
-
-//     return (
-//         <div >
-//             <button > Test</button>
-//         </div >
-//     );
-
-// }
-
-
-// export default Test;

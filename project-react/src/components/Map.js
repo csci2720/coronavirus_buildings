@@ -1,19 +1,25 @@
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Link, useHistory } from "react-router-dom";
-import { BrowserRouter as Router } from 'react-router-dom'
-import { browserHistory, Redirect } from 'react-router'
+
 
 const mapStyles = {
     display: 'flex',
     alignSelf: 'flex-end',
-    width: '500px',
-    height: '500px'
+    width: '1000px',
+    height: '500px',
+    marginLeft: '180px'
 };
 
 let geocoder;
-let addressData = [{ location: "18 Stanley Main Street, HK" }, { location: "Block C, Villa Lotto, HK" }];
+let addressData = [{ location: "11 Mut Wah Street, HK" }, { location: "Un Lok House, Un Chau Estate, HK" }, { location: "Block C, Villa Lotto, HK" }, { location: "Maylun Apartments, 1-25 Shu Kuk Street, HK" }, { location: "Phase 1, The Redhill Peninsula, HK" }, { location: "Jolly Villa, HK" }, { location: "Block 4, Swiss Towers, HK" }, { location: "Hung Fuk Building, HK" },
+{ location: "Hong Fook Court, Bedford Gardens, HK" }, { location: "Block 4, Bauhinia Garden, HK" }, { location: "Hong Shui Court, HK" }]
 
+
+
+//show locations on map
 export class MapComponent extends Component {
     constructor(props) {
         super(props);
@@ -30,25 +36,7 @@ export class MapComponent extends Component {
     }
 
     componentDidMount() {
-        this.getAddress()
         this.plotPoints()
-
-    }
-
-    getAddress() {
-        const data = localStorage.getItem('covidData');
-
-        // data.map(each => {
-        //     addressData.push({ location: each })
-        // })
-        // for (let i = 0; i < 49; i++) {
-        //     addressData.push({ location: data[i].building })
-        // }
-
-        console.log("Map data")
-        console.log(data)
-
-
 
     }
 
@@ -135,7 +123,7 @@ export class MapComponent extends Component {
                     <div className="col-md-12">
                         <Map
                             google={this.props.google}
-                            zoom={10}
+                            zoom={11}
                             style={mapStyles}
                             initialCenter={{
                                 lat: 22.3193,

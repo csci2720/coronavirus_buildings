@@ -1,3 +1,6 @@
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Header from './Header';
@@ -55,8 +58,6 @@ export default function Admin() {
     const handleDeleteSubmit = () => {
         alert("Delete submitted")
     }
-
-
 
 
     //User creation, updation, deletion

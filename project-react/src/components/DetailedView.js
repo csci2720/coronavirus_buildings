@@ -1,34 +1,18 @@
-// import React from 'react';
-// import { useLocation } from 'react-router';
-
-// const DetailedView = (props) => {
-
-//     const location = useLocation()
-
-//     return (
-//         <div >
-//             <h2>District: {location.data.district} </h2>
-//             <h2>Building: {location.data.building} </h2>
-//             <h2>Age: {location.data.ages} </h2>
-//             <h2>Cases: {location.data.cases} </h2>
-//             <h2>Date: {location.data.date} </h2>
-//         </div>
-//     );
-// }
-
-// export default DetailedView;
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useLocation } from 'react-router';
-import Header from './Header';
-import MapDetail from './MapDetail';
+import MapDetail, { MapComponent } from './MapDetail';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -49,6 +33,7 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 
+//detailed view of user's selected location
 const DetailedView = (props) => {
 
     const location = useLocation()
@@ -59,12 +44,26 @@ const DetailedView = (props) => {
         { name: 'Last Date of Visit', data: location.data.date },
         { name: 'Related Cases No.', data: location.data.cases },
         { name: 'Patient Age(s)', data: location.data.ages },
-        { name: 'Patient Gender(s', data: location.data.genders }
+        { name: 'Patient Gender(s)', data: location.data.genders }
     ];
 
+    const addCom = () => {
+        alert("Comment added")
+    }
+
+    // const commentHandle = (e) => {
+    //     let temp = e.target.value
+    //     setComment(temp)
+
+    // }
+
+
+
+
+    console.log("details: ", data)
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div style={{
                 marginTop: '40px', marginLeft: '70px', align: "center"
             }}>
@@ -90,12 +89,24 @@ const DetailedView = (props) => {
                         </Table>
                     </TableContainer>
                 </div >
-                <div style={{ marginLeft: '70px', marginTop: '20px', width: '750px', height: '300px' }}><MapDetail loc={data.data} /></div>
+                <div style={{ marginLeft: '70px', marginTop: '20px', width: '750px', height: '300px' }}><MapDetail /></div>
 
             </div >
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <TextField id="outlined-basic" label="New comment" variant="outlined" style={{ marginTop: '20px', marginLeft: "70px", height: '50px', width: '260px' }} />
+                <Button onClick={addCom} variant="outlined" color="primary" style={{ height: '40px', width: '195px', marginTop: '20px', marginLeft: "70px" }} type="submit">Add Comment</Button>
+            </div>
         </div>
     );
 }
 
 
 export default DetailedView;
+
+
+
+
+
+
+
+

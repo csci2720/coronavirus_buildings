@@ -1,10 +1,9 @@
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Link, useHistory } from "react-router-dom";
-import { BrowserRouter as Router } from 'react-router-dom'
-import { browserHistory, Redirect } from 'react-router'
 
-import { useLocation } from 'react-router';
 
 const mapStyles = {
     display: 'flex',
@@ -18,8 +17,10 @@ const mapStyles = {
 
 
 let geocoder;
-let addressData = {};
+let addressData = { location: "Block 4, Bauhinia Garden, HK" };
 
+
+//Map for detailed view
 export class MapComponent extends Component {
 
 
@@ -42,28 +43,28 @@ export class MapComponent extends Component {
 
 
     componentDidMount() {
-        this.getAddress()
+        // this.getAddress()
         this.plotPoints()
         // console.log(addressData)
     }
 
-    getAddress() {
+    // getAddress() {
 
 
-        //const location = useLocation()
+    //     //const location = useLocation()
 
-        let loc = { location: this.props.loc };
-
-
-        addressData = { loc }
-
-        console.log("addressData")
-        console.log(this.props.loc)
+    //     let loc = { location: this.props.loc };
 
 
+    //     addressData = { loc }
+
+    //     console.log("addressData")
+    //     console.log(this.props.loc)
 
 
-    }
+
+
+    // }
 
 
     plotPoints() {
@@ -148,7 +149,7 @@ export class MapComponent extends Component {
                     <div className="col-md-12">
                         <Map
                             google={this.props.google}
-                            zoom={10}
+                            zoom={11}
                             style={mapStyles}
                             initialCenter={{
                                 lat: 22.3193,
@@ -156,7 +157,12 @@ export class MapComponent extends Component {
                             }}
 
                         >
-                            {this.displayMarkers(this.state.places)}
+                            <Marker position={{
+                                lat: 22.319343,
+                                lng: 114.169434
+                            }}
+                                onClick={this.onMarkerClick.bind(this)} />
+                            {/* {this.displayMarkers(this.state.places)} */}
                             <InfoWindow
                                 marker={this.state.activeMarker}
                                 visible={this.state.showingInfoWindow}

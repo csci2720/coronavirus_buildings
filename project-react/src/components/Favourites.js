@@ -1,6 +1,8 @@
-
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { useState, useEffect } from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,9 +12,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useLocation } from 'react-router';
 import Header from './Header';
-import Map from './Map';
-
-
 
 
 const useStyles = makeStyles({
@@ -22,11 +21,10 @@ const useStyles = makeStyles({
 });
 
 
+//list of favourites
 const Favourites = (props) => {
 
     const [fav, setFav] = useState([]);
-
-
     const location = useLocation();
 
 
@@ -44,20 +42,11 @@ const Favourites = (props) => {
         console.log("state: ", fav)
 
     }
-    // const data = [
-    //     { name: 'District', data: location.data.district },
-    //     { name: 'Building Name', data: location.data.building },
-    //     { name: 'Last Date of Visit', data: location.data.date },
-    //     { name: 'Related Cases No.', data: location.data.cases },
-    //     { name: 'Patient Age(s)', data: location.data.ages },
-    //     { name: 'Patient Gender(s', data: location.data.genders }
-    // ];
 
     const classes = useStyles();
     return (
         <div>
             <Header />
-            <button onClick={test}>test</button>
             <div style={{
                 marginTop: '50px', marginLeft: '50px', align: "center"
             }}>
@@ -100,8 +89,6 @@ const Favourites = (props) => {
         </div>
     );
 }
-
-
 
 
 export default Favourites;

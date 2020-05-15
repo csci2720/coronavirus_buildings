@@ -1,11 +1,20 @@
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 import '../css/Login.css';
 
+
+
+//Registration
 const Register = () => {
     const [name, setName] = useState('');
 
+    const handeReg = () => {
+        alert("You have successfully registered!")
+    }
 
     return (
         <div className="loginOuterContainer">
@@ -21,7 +30,7 @@ const Register = () => {
 
 
                 <Link to={`/`}>
-                    <button className={'button mt-20'} type="submit">Sign Up</button>
+                    <button onClick={handeReg} className={'button mt-20'} type="submit">Sign Up</button>
                 </Link>
             </div>
         </div >
