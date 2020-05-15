@@ -4,6 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import { BrowserRouter as Router } from 'react-router-dom'
 import { browserHistory, Redirect } from 'react-router'
 
+import { useLocation } from 'react-router';
+
 const mapStyles = {
     display: 'flex',
     alignSelf: 'flex-end',
@@ -11,10 +13,16 @@ const mapStyles = {
     height: '500px'
 };
 
+
+
+
+
 let geocoder;
-let addressData = [{ location: "18 Stanley Main Street, HK" }, { location: "Block C, Villa Lotto, HK" }];
+let addressData = {};
 
 export class MapComponent extends Component {
+
+
     constructor(props) {
         super(props);
         this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -28,25 +36,30 @@ export class MapComponent extends Component {
 
         }
     }
+    // static defaultProps = {
+    //     foo: 'bar'
+    // }
+
 
     componentDidMount() {
         this.getAddress()
         this.plotPoints()
-
+        // console.log(addressData)
     }
 
     getAddress() {
-        const data = localStorage.getItem('covidData');
 
-        // data.map(each => {
-        //     addressData.push({ location: each })
-        // })
-        // for (let i = 0; i < 49; i++) {
-        //     addressData.push({ location: data[i].building })
-        // }
 
-        console.log("Map data")
-        console.log(data)
+        //const location = useLocation()
+
+        let loc = { location: this.props.loc };
+
+
+        addressData = { loc }
+
+        console.log("addressData")
+        console.log(this.props.loc)
+
 
 
 

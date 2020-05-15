@@ -3,22 +3,25 @@ import queryString from 'query-string';
 import TableData from "./Table";
 import Header from "./Header"
 import MapComponent from "./Map"
+
+import Test from "./Test"
 import { Container, Row, Col } from 'reactstrap';
 
 const Home = ({ location }) => {
-    const [name, setName] = useState('');
+    // const [name, setName] = useState('');
 
-    useEffect(() => {
-        const { name } = queryString.parse(location.search);
+    // useEffect(() => {
+    //     const { name } = queryString.parse(location.search);
 
-        setName(name)
+    //     setName(name)
 
-    }, [location.search]);
+    // }, [location.search]);
 
 
 
     return (
         <div>
+            <Test />
             <Header />
             <div style={{ display: 'flex', flexDirection: 'row', margin: '30px', marginTop: '0px' }} >
 

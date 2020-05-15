@@ -16,7 +16,7 @@ function App() {
       {/* <Test /> */}
       <Router>
         <Route path="/" exact component={Login} />
-        <Route path="/home" component={Home} />
+        <Route path="/home" component={Test} />
         <Route path="/register" component={Register} />
         <Route path="/details" component={DetailedView} />
         <Route path="/favourites" component={Favourites} />

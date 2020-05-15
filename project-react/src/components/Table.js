@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTable, useFilters, useGlobalFilter, usePagination, useSortBy } from "react-table";
 import MaUTable from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,6 +12,7 @@ import DetailedView from './DetailedView';
 import Register from './Register';
 import { Link } from "react-router-dom";
 import About from './About';
+import axios from 'axios'
 
 
 
@@ -103,26 +104,43 @@ const useStyles = makeStyles({
     }
 });
 
+const data1 = []
 
-const TableData = () => {
+const TableData = (props) => {
 
     const [favs, setFav] = useState([]);
+    // const [allData, setAllData] = useState([]);
 
-    // const handleItem = (i) => {
-    //     //alert("to")
-    //     setShow(!show)
-    //     console.log(i)
-    //     //return <About test={'testing...'} />
-    // }
+    //data1 = props.data
 
+    useEffect(async () => {
+        // Update the document title using the browser API
+        // setAllData(props.data)
+        data1 = await props.data
+        console.log(data1)
+    }, []);
 
-    const addFavourite = (info) => {
+    const addFavourite = async (info) => {
 
-        setFav([...favs, info]);
-        alert("Added to favourites succesfully!")
+        // setFav([...favs, info]);
 
-
+        // await fetch("https://cors-anywhere.herokuapp.com/http://localhost:3000/api/admin/loadData")
+        //     .then(res => res.json())
+        //     .then(
+        //         (result) => {
+        //             //setList(result.items)
+        //             console.log(result)
+        //         },
+        //         // Note: it's important to handle errors here
+        //         // instead of a catch() block so that we don't swallow
+        //         // exceptions from actual bugs in components.
+        //         (error) => {
+        //             console.log("ERRORRRR")
+        //         }
+        //     )
         // console.log(favs)
+
+        alert("Added to favourites succesfully!")
 
     }
 
@@ -171,7 +189,7 @@ const TableData = () => {
     } = useTable(
         {
             columns,
-            data,
+            data1,
             defaultColumn,
             filterTypes,
             initialState: { pageIndex: 0 }
@@ -181,7 +199,6 @@ const TableData = () => {
         useSortBy,
         usePagination
     );
-    const newTo = {}
 
     return (
         <div>

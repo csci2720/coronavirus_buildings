@@ -28,7 +28,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useLocation } from 'react-router';
 import Header from './Header';
-import Map from './Map';
+import MapDetail from './MapDetail';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -90,7 +90,7 @@ const DetailedView = (props) => {
                         </Table>
                     </TableContainer>
                 </div >
-                <div style={{ marginLeft: '70px', marginTop: '20px', width: '750px', height: '300px' }}><Map isMarkerShown /></div>
+                <div style={{ marginLeft: '70px', marginTop: '20px', width: '750px', height: '300px' }}><MapDetail loc={data.data} /></div>
 
             </div >
         </div>
