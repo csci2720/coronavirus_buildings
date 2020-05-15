@@ -1,3 +1,6 @@
+//Dildakhan Darkhan (1155086654)
+//Jumageldiyev Myratgeldi (1155118066)
+//Manuchehr Tursunov (1155118876)
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
