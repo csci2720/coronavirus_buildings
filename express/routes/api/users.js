@@ -9,6 +9,7 @@ const Admin = require("../../models/Admin");
 const Location = require("../../models/Location");
 const User = require("../../models/User");
 const Case = require("../../models/Case");
+const Comment = require("../../models/Comment");
 
 
 // @route 
@@ -148,18 +149,17 @@ router.post('/favourites/:favouriteId', async (req, res) => {
   }
 });
 // add comment
-router.post('/comment/', (req, res) => {
-  var comment = req.body.password;
-  var x = User.findOne({username: req.body.username});
-  var y = Location.findOne(req.body.location);
-  var z = req.body.comment;
+router.post('/comment/',async (req, res) => {
+  var x = await User.findOne({username: req.body.User.username});
+  var y = await Location.findOne(req.body.Location);
+  var z = req.body.text;
   var newComment = new Comment({
     user: x,
     text: z,
     location: y
   });
-  newComment.save()
-  res.send("Congratulations, you have successfully created an account.");
+  newComment.save();
+  res.send("Comment was successfully added");
 });
 
 module.exports = router;
